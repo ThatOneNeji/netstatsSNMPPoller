@@ -1,0 +1,219 @@
+{
+    "ifmib": {
+        "oid_base": "1.3.6.1.2.1.2.2.1",
+        "oid": [1, 3, 6, 1, 2, 1, 2, 2, 1],
+        "oid2mib":
+                {
+                    "1.3.6.1.2.1.2.2.1.1": "ifindex",
+                    "1.3.6.1.2.1.2.2.1.2": "ifdescr",
+                    "1.3.6.1.2.1.2.2.1.3": "iftype",
+                    "1.3.6.1.2.1.2.2.1.4": "ifmtu",
+                    "1.3.6.1.2.1.2.2.1.5": "ifspeed",
+                    "1.3.6.1.2.1.2.2.1.6": "ifphysaddress",
+                    "1.3.6.1.2.1.2.2.1.7": "ifadminstatus",
+                    "1.3.6.1.2.1.2.2.1.8": "ifoperstatus",
+                    "1.3.6.1.2.1.2.2.1.9": "iflastchange",
+                    "1.3.6.1.2.1.2.2.1.10": "ifinoctets",
+                    "1.3.6.1.2.1.2.2.1.11": "ifinucastpkts",
+                    "1.3.6.1.2.1.2.2.1.12": "ifinnucastpkts",
+                    "1.3.6.1.2.1.2.2.1.13": "ifindiscards",
+                    "1.3.6.1.2.1.2.2.1.14": "ifinerrors",
+                    "1.3.6.1.2.1.2.2.1.15": "ifinunknownprotos",
+                    "1.3.6.1.2.1.2.2.1.16": "ifoutoctets",
+                    "1.3.6.1.2.1.2.2.1.17": "ifoutucastpkts",
+                    "1.3.6.1.2.1.2.2.1.18": "ifoutnucastpkts",
+                    "1.3.6.1.2.1.2.2.1.19": "ifoutdiscards",
+                    "1.3.6.1.2.1.2.2.1.20": "ifouterrors",
+                    "1.3.6.1.2.1.2.2.1.21": "ifoutqlen",
+                    "1.3.6.1.2.1.2.2.1.22": "ifspecific"
+                }
+    },
+    "systemmib": {
+        "oid_base": "1.3.6.1.4.1.14988.1.1.7",
+        "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 7],
+        "oid2mib":
+                {
+                    "1.3.6.1.4.1.14988.1.1.7.1": "mtxrsystemreboot",
+                    "1.3.6.1.4.1.14988.1.1.7.2": "mtxrusbpowerreset",
+                    "1.3.6.1.4.1.14988.1.1.7.3": "mtxrserialnumber",
+                    "1.3.6.1.4.1.14988.1.1.7.4": "mtxrfirmwareversion",
+                    "1.3.6.1.4.1.14988.1.1.7.5": "mtxrnote",
+                    "1.3.6.1.4.1.14988.1.1.7.6": "mtxrbuildtime",
+                    "1.3.6.1.4.1.14988.1.1.7.7": "mtxrfirmwareupgradeversion"
+                }
+    },
+    "host_resources_processor": {
+        "oid_base": "1.3.6.1.2.1.25.3.3.1",
+        "oid": [1, 3, 6, 1, 2, 1, 25, 3, 3, 1],
+        "oid2mib":
+                {
+                    "1.3.6.1.2.1.25.3.3.1.1": "hrprocessorfrwid",
+                    "1.3.6.1.2.1.25.3.3.1.2": "hrprocessorload"
+                }
+    },
+    "host_resources_storage": {
+        "oid_base": "1.3.6.1.2.1.25.2.3.1",
+        "oid": [1, 3, 6, 1, 2, 1, 25, 2, 3, 1],
+        "oid2mib":
+                {
+                    "1.3.6.1.2.1.25.2.3.1.1": "hrstorageindex",
+                    "1.3.6.1.2.1.25.2.3.1.2": "hrstoragetype",
+                    "1.3.6.1.2.1.25.2.3.1.3": "hrstoragedescr",
+                    "1.3.6.1.2.1.25.2.3.1.4": "hrstorageallocationunits",
+                    "1.3.6.1.2.1.25.2.3.1.5": "hrstoragesize",
+                    "1.3.6.1.2.1.25.2.3.1.6": "hrstorageused",
+                    "1.3.6.1.2.1.25.2.3.1.7": "hrstorageallocationfailures"
+                }
+    },
+    "mikrotik_interfacestats": {
+        "oid_base": "1.3.6.1.4.1.14988.1.1.14.1.1",
+        "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 14, 1, 1],
+        "oid2mib":
+                {
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.1": "mtxrinterfacestatsindex",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.2": "mtxrinterfacestatsname",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.11": "mtxrinterfacestatsdriverrxbytes",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.12": "mtxrinterfacestatsdriverrxpackets",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.13": "mtxrinterfacestatsdrivertxbytes",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.14": "mtxrinterfacestatsdrivertxpackets",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.15": "mtxrinterfacestatstxrx64",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.16": "mtxrinterfacestatstxrx65to127",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.17": "mtxrinterfacestatstxrx128to255",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.18": "mtxrinterfacestatstxrx256to511",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.19": "mtxrinterfacestatstxrx512to1023",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.20": "mtxrinterfacestatstxrx1024to1518",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.21": "mtxrinterfacestatstxrx1519tomax",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.31": "mtxrinterfacestatsrxbytes",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.32": "mtxrinterfacestatsrxpackets",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.33": "mtxrinterfacestatsrxtooshort",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.34": "mtxrinterfacestatsrx64",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.35": "mtxrinterfacestatsrx65to127",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.36": "mtxrinterfacestatsrx128to255",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.37": "mtxrinterfacestatsrx256to511",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.38": "mtxrinterfacestatsrx512to1023",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.39": "mtxrinterfacestatsrx1024to1518",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.40": "mtxrinterfacestatsrx1519tomax",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.41": "mtxrinterfacestatsrxtoolong",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.42": "mtxrinterfacestatsrxbroadcast",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.43": "mtxrinterfacestatsrxpause",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.44": "mtxrinterfacestatsrxmulticast",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.45": "mtxrinterfacestatsrxfcserror",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.46": "mtxrinterfacestatsrxalignerror",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.47": "mtxrinterfacestatsrxfragment",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.48": "mtxrinterfacestatsrxoverflow",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.49": "mtxrinterfacestatsrxcontrol",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.50": "mtxrinterfacestatsrxunknownop",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.51": "mtxrinterfacestatsrxlengtherror",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.52": "mtxrinterfacestatsrxcodeerror",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.53": "mtxrinterfacestatsrxcarriererror",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.54": "mtxrinterfacestatsrxjabber",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.55": "mtxrinterfacestatsrxdrop",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.61": "mtxrinterfacestatstxbytes",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.62": "mtxrinterfacestatstxpackets",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.63": "mtxrinterfacestatstxtooshort",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.64": "mtxrinterfacestatstx64",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.65": "mtxrinterfacestatstx65to127",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.66": "mtxrinterfacestatstx128to255",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.67": "mtxrinterfacestatstx256to511",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.68": "mtxrinterfacestatstx512to1023",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.69": "mtxrinterfacestatstx1024to1518",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.70": "mtxrinterfacestatstx1519tomax",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.71": "mtxrinterfacestatstxtoolong",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.72": "mtxrinterfacestatstxbroadcast",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.73": "mtxrinterfacestatstxpause",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.74": "mtxrinterfacestatstxmulticast",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.75": "mtxrinterfacestatstxunderrun",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.76": "mtxrinterfacestatstxcollision",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.77": "mtxrinterfacestatstxexcessivecollision",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.78": "mtxrinterfacestatstxmultiplecollision",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.79": "mtxrinterfacestatstxsinglecollision",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.80": "mtxrinterfacestatstxexcessivedeferred",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.81": "mtxrinterfacestatstxdeferred",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.82": "mtxrinterfacestatstxlatecollision",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.83": "mtxrinterfacestatstxtotalcollision",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.84": "mtxrinterfacestatstxpausehonored",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.85": "mtxrinterfacestatstxdrop",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.86": "mtxrinterfacestatstxjabber",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.87": "mtxrinterfacestatstxfcserror",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.88": "mtxrinterfacestatstxcontrol",
+                    "1.3.6.1.4.1.14988.1.1.14.1.1.89": "mtxrinterfacestatstxfragment"
+                }
+    },
+    "mikrotik_queuesimple": {
+        "oid_base": "1.3.6.1.4.1.14988.1.1.2.1.1",
+        "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 2, 1, 1],
+        "oid2mib":
+                {
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.1": "mtxrqueuesimpleindex",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.2": "mtxrqueuesimplename",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.3": "mtxrqueuesimplesrcaddr",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.4": "mtxrqueuesimplesrcmask",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.5": "mtxrqueuesimpledstaddr",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.6": "mtxrqueuesimpledstmask",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.7": "mtxrqueuesimpleiface",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.8": "mtxrqueuesimplebytesin",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.9": "mtxrqueuesimplebytesout",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.10": "mtxrqueuesimplepacketsin",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.11": "mtxrqueuesimplepacketsout",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.12": "mtxrqueuesimplepcqqueuesin",
+                    "1.3.6.1.4.1.14988.1.1.2.1.1.13": "mtxrqueuesimplepcqqueuesout"
+                }
+    },
+    "mikrotik_queuetree": {
+        "oid_base": "1.3.6.1.4.1.14988.1.1.2.2.1",
+        "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 2, 2, 1],
+        "oid2mib":
+                {
+                    "1.3.6.1.4.1.14988.1.1.2.2.1.1": "mtxrqueuetreeindex",
+                    "1.3.6.1.4.1.14988.1.1.2.2.1.2": "mtxrqueuetreename",
+                    "1.3.6.1.4.1.14988.1.1.2.2.1.3": "mtxrqueuetreeflow",
+                    "1.3.6.1.4.1.14988.1.1.2.2.1.4": "mtxrqueuetreeparentindex",
+                    "1.3.6.1.4.1.14988.1.1.2.2.1.5": "mtxrqueuetreebytes",
+                    "1.3.6.1.4.1.14988.1.1.2.2.1.6": "mtxrqueuetreepackets",
+                    "1.3.6.1.4.1.14988.1.1.2.2.1.7": "mtxrqueuetreehcbytes",
+                    "1.3.6.1.4.1.14988.1.1.2.2.1.8": "mtxrqueuetreepcqqueues",
+                    "1.3.6.1.4.1.14988.1.1.2.2.1.9": "mtxrqueuetreedropped"
+                }
+    },
+    "mikrotik_neighbor": {
+        "oid_base": "1.3.6.1.4.1.14988.1.1.11.1.1",
+        "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 11, 1, 1],
+        "oid2mib":
+                {
+                    "1.3.6.1.4.1.14988.1.1.11.1.1.1": "mtxrneighborindex",
+                    "1.3.6.1.4.1.14988.1.1.11.1.1.2": "mtxrneighboripaddress",
+                    "1.3.6.1.4.1.14988.1.1.11.1.1.3": "mtxrneighbormacaddress",
+                    "1.3.6.1.4.1.14988.1.1.11.1.1.4": "mtxrneighborversion",
+                    "1.3.6.1.4.1.14988.1.1.11.1.1.5": "mtxrneighborplatform",
+                    "1.3.6.1.4.1.14988.1.1.11.1.1.6": "mtxrneighboridentity",
+                    "1.3.6.1.4.1.14988.1.1.11.1.1.7": "mtxrneighborsoftwareid",
+                    "1.3.6.1.4.1.14988.1.1.11.1.1.8": "mtxrneighborinterfaceid"
+                }
+    },
+    "mikrotik_ap_client": {
+        "oid_base": "1.3.6.1.4.1.14988.1.1.1.2.1",
+        "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 1, 2, 1],
+        "oid2mib":
+                {
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.1": "mtxrwlrtabaddr",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.2": "mtxrwlrtabiface",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.3": "mtxrwlrtabstrength",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.4": "mtxrwlrtabtxbytes",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.5": "mtxrwlrtabrxbytes",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.6": "mtxrwlrtabtxpackets",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.7": "mtxrwlrtabrxpackets",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.8": "mtxrwlrtabtxrate",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.9": "mtxrwlrtabrxrate",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.10": "mtxrwlrtabrouterosversion",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.11": "mtxrwlrtabuptime",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.12": "mtxrwlrtabsignaltonoise",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.13": "mtxrwlrtabtxstrengthch0",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.14": "mtxrwlrtabrxstrengthch0",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.15": "mtxrwlrtabtxstrengthch1",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.16": "mtxrwlrtabrxstrengthch1",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.17": "mtxrwlrtabtxstrengthch2",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.18": "mtxrwlrtabrxstrengthch2",
+                    "1.3.6.1.4.1.14988.1.1.1.2.1.19": "mtxrwlrtabtxstrength"
+                }
+    }
+}
