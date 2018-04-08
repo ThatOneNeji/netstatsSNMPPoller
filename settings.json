@@ -1,25 +1,21 @@
 {
     "amqp": {
-        "server": "192.168.72.250",
-        "user": "wugmsNodeSNMPPoller",
-        "password": "wugmsNodeSNMPPoller",
-        "queuenamecron": "cron/snmp/nodes",
-        "queuenamedata": "snmp/test/rawdata"
+        "server": "192.168.72.7",
+        "user": "netstatsNodeSNMPPoller",
+        "password": "netstatsNodeSNMPPoller",
+        "queuenamecron": "netstats/cron/snmp",
+        "queuenamedata": "netstats/rawdata/snmp"
     },
-    "snmp": {
-        "community": "asuran",
-        "port": 161
-    },    
     "logger": {
         "appenders": {
             "out": {
                 "type": "console"
             },
             "task": {
-                "type": "dateFile",
-                "filename": "logs/wugmsNodeSNMPPoller",
-                "pattern": "-dd.log",
-                "alwaysIncludePattern": true
+                "type": "file",
+                "filename": "logs/netstatsNodeSNMPPoller.log",
+                "maxLogSize": 1048576,
+                "backups": 10
             }
         },
         "categories": {
@@ -29,90 +25,8 @@
             },
             "task": {
                 "appenders": ["task"],
-                "level": "info"
+                "level": "error"
             }
         }
-    },
-    "nodes": [{
-            "name": "Soul Eater",
-            "ip_address": "192.168.100.1",
-            "services": ["ifmib", "host_resources_processor", "host_resources_storage"]
-        }, {
-            "name": "Orphan.Tears",
-            "ip_address": "192.168.100.2",
-            "services": ["ifmib"]
-        }, {
-            "name": "Asuran",
-            "ip_address": "192.168.100.3",
-            "services": ["ifmib", "arp", "bgp"]
-        }, {
-            "name": "Asgard",
-            "ip_address": "192.168.72.254",
-            "services": ["ifmib"]
-        }, {
-            "name": "BP_Sec2",
-            "ip_address": "172.16.80.78",
-            "services": ["ap_clients"]
-        }, {
-            "name": "RB_Sec1",
-            "ip_address": "172.16.88.74",
-            "services": ["ap_clients"]
-        }, {
-            "name": "RB_Sec2",
-            "ip_address": "172.16.88.78",
-            "services": ["ap_clients"]
-        }, {
-            "name": "NR_Sec1",
-            "ip_address": "172.16.84.74",
-            "services": ["ap_clients"]
-        }, {
-            "name": "bp_core",
-            "ip_address": "172.16.250.127",
-            "services": ["bgp", "arp"]
-        }, {
-            "name": "nr_core",
-            "ip_address": "172.16.250.14",
-            "services": ["bgp", "ap_clients"]
-        }, {
-            "name": "bp_nr_link",
-            "ip_address": "172.16.80.2",
-            "services": ["ap_clients"]
-        }, {
-            "name": "bp_cat_link",
-            "ip_address": "172.16.80.10",
-            "services": ["ap_clients"]
-        }, {
-            "name": "bp_nivec_link",
-            "ip_address": "172.16.80.17",
-            "services": ["ap_clients"]
-        }, {
-            "name": "bp_nr_link",
-            "ip_address": "172.16.80.26",
-            "services": ["ap_clients"]
-        }, {
-            "name": "kv_core",
-            "ip_address": "172.16.250.19",
-            "services": ["bgp", "arp"]
-        }, {
-            "name": "bs_core",
-            "ip_address": "172.16.250.20",
-            "services": ["bgp", "arp"]
-        }, {
-            "name": "nr_core",
-            "ip_address": "172.16.250.14",
-            "services": ["bgp", "ap_clients", "arp"]
-        }, {
-            "name": "bp_core",
-            "ip_address": "172.16.250.127",
-            "services": ["bgp", "arp"]
-        }, {
-            "name": "rb_core",
-            "ip_address": "172.16.250.10",
-            "services": ["bgp", "arp"]
-        }, {
-            "name": "gc_core",
-            "ip_address": "172.16.250.5",
-            "services": ["bgp", "arp"]
-        }
-    ]
+    }
 }

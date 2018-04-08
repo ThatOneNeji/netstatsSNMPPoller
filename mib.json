@@ -2,6 +2,7 @@
     "ifmib": {
         "oid_base": "1.3.6.1.2.1.2.2.1",
         "oid": [1, 3, 6, 1, 2, 1, 2, 2, 1],
+        "type": "walk",
         "oid2mib":
                 {
                     "1.3.6.1.2.1.2.2.1.1": "ifindex",
@@ -31,6 +32,7 @@
     "systemmib": {
         "oid_base": "1.3.6.1.4.1.14988.1.1.7",
         "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 7],
+        "type": "walk",
         "oid2mib":
                 {
                     "1.3.6.1.4.1.14988.1.1.7.1": "mtxrsystemreboot",
@@ -45,6 +47,7 @@
     "host_resources_processor": {
         "oid_base": "1.3.6.1.2.1.25.3.3.1",
         "oid": [1, 3, 6, 1, 2, 1, 25, 3, 3, 1],
+        "type": "walk",
         "oid2mib":
                 {
                     "1.3.6.1.2.1.25.3.3.1.1": "hrprocessorfrwid",
@@ -54,6 +57,7 @@
     "host_resources_storage": {
         "oid_base": "1.3.6.1.2.1.25.2.3.1",
         "oid": [1, 3, 6, 1, 2, 1, 25, 2, 3, 1],
+        "type": "walk",
         "oid2mib":
                 {
                     "1.3.6.1.2.1.25.2.3.1.1": "hrstorageindex",
@@ -68,6 +72,7 @@
     "mikrotik_interfacestats": {
         "oid_base": "1.3.6.1.4.1.14988.1.1.14.1.1",
         "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 14, 1, 1],
+        "type": "walk",
         "oid2mib":
                 {
                     "1.3.6.1.4.1.14988.1.1.14.1.1.1": "mtxrinterfacestatsindex",
@@ -142,6 +147,7 @@
     "mikrotik_queuesimple": {
         "oid_base": "1.3.6.1.4.1.14988.1.1.2.1.1",
         "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 2, 1, 1],
+        "type": "walk",
         "oid2mib":
                 {
                     "1.3.6.1.4.1.14988.1.1.2.1.1.1": "mtxrqueuesimpleindex",
@@ -162,6 +168,7 @@
     "mikrotik_queuetree": {
         "oid_base": "1.3.6.1.4.1.14988.1.1.2.2.1",
         "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 2, 2, 1],
+        "type": "walk",
         "oid2mib":
                 {
                     "1.3.6.1.4.1.14988.1.1.2.2.1.1": "mtxrqueuetreeindex",
@@ -178,6 +185,7 @@
     "mikrotik_neighbor": {
         "oid_base": "1.3.6.1.4.1.14988.1.1.11.1.1",
         "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 11, 1, 1],
+        "type": "walk",
         "oid2mib":
                 {
                     "1.3.6.1.4.1.14988.1.1.11.1.1.1": "mtxrneighborindex",
@@ -193,6 +201,7 @@
     "mikrotik_ap_client": {
         "oid_base": "1.3.6.1.4.1.14988.1.1.1.2.1",
         "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 1, 2, 1],
+        "type": "walk",
         "oid2mib":
                 {
                     "1.3.6.1.4.1.14988.1.1.1.2.1.1": "mtxrwlrtabaddr",
@@ -214,6 +223,15 @@
                     "1.3.6.1.4.1.14988.1.1.1.2.1.17": "mtxrwlrtabtxstrengthch2",
                     "1.3.6.1.4.1.14988.1.1.1.2.1.18": "mtxrwlrtabrxstrengthch2",
                     "1.3.6.1.4.1.14988.1.1.1.2.1.19": "mtxrwlrtabtxstrength"
+                }
+    },
+    "testing": {
+        "oid_base": "1.3.6.1.4.1.2021.11.10.0",
+        "oid": [1, 3, 6, 1, 4, 1, 2021, 11, 10, 0],
+        "type": "get",
+        "oid2mib":
+                {
+                    "1.3.6.1.4.1.2021.11.10.0": "ssCpuSystem"
                 }
     }
 }

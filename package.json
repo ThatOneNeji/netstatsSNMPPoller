@@ -18,8 +18,8 @@
     "contributors": [],
     "dependencies": {
         "amqplib": "^0.5.2",
-        "log4js": "^2.3.12",
-        "moment": "^2.19.3",
-        "snmp-native": "^1.1.1"
+        "log4js": "^2.5.2",
+        "moment": "^2.22.0",
+        "snmp-native": "^1.1.2"
     }
 }
