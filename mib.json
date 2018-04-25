@@ -29,7 +29,7 @@
                     "1.3.6.1.2.1.2.2.1.22": "ifspecific"
                 }
     },
-    "systemmib": {
+    "mikrotiksystem": {
         "oid_base": "1.3.6.1.4.1.14988.1.1.7",
         "oid": [1, 3, 6, 1, 4, 1, 14988, 1, 1, 7],
         "type": "walk",

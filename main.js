@@ -6,6 +6,7 @@ var snmp = require('snmp-native'), log4js = require('log4js'), moment = require(
 var genLogger = log4js.getLogger('netstatsNodeSNMPPoller');
 var amqpLogger = log4js.getLogger('amqp');
 var snmpLogger = log4js.getLogger('snmp');
+var parserLogger = log4js.getLogger('parser');
 
 log4js.configure(appConfig.logger);
 
@@ -126,8 +127,8 @@ function cleanValue(value, type) {
     }
 }
 
-function processSNMPGetData(agents, res) {
-    res.forEach(function (vb) {
+function processSNMPGetData(agents, rawSNMPData) {
+    rawSNMPData.forEach(function (vb) {
 //        console.log(vb);
 //        console.log(vb.oid);
 //        console.log(typeof vb.oid);
@@ -150,8 +151,88 @@ function processSNMPGetData(agents, res) {
         agents['data'][idx][mibConfig[agents.service_name].oid2mib[oid]] = vb.value.toString();
 
     });
-    console.log(agents);
+    parserLogger.debug(agents);
 }
+
+/**
+ * Process raw data for Mikrotik AP Clients
+ * @param {array} agents
+ * @param {array} rawSNMPData
+ * @returns {undefined}
+ */
+function processRawData_MAPC(agents, rawSNMPData) {
+    rawSNMPData.forEach(function (vb) {
+        let ap_id = vb.oid.pop();
+        agents['ap_id'] = ap_id;
+        let mac6 = vb.oid.pop();
+        let mac5 = vb.oid.pop();
+        let mac4 = vb.oid.pop();
+        let mac3 = vb.oid.pop();
+        let mac2 = vb.oid.pop();
+        let mac1 = vb.oid.pop();
+        let mac_add_idx = mac1 + '.' + mac2 + '.' + mac3 + '.' + mac4 + '.' + mac5 + '.' + mac6;
+        let mac_add = mac1.toString(16) + ':' + mac2.toString(16) + ':' + mac3.toString(16) + ':' + mac4.toString(16) + ':' + mac5.toString(16) + ':' + mac6.toString(16);
+        let idx = mac_add_idx;
+        let tst = vb.oid.toString().replace(/,/g, '.');
+        let o = tst.split('.');
+        let oid = o.join('.');
+        let matches = tst.match(/(1\.3\.6\.1\.4\.1\.14988\.1\.1\.1\.2\.1.[0-9])/);
+        if (typeof (agents['data'][idx]) === 'undefined')
+            agents['data'][idx] = {};
+        if ((vb.type === 4) && ((oid === '1.3.6.1.4.1.14988.1.1.1.2.1.1') || (oid === '1.3.6.1.4.1.14988.1.1.1.2.1.10'))) {
+            agents['data'][idx][mibConfig[agents.service_name].oid2mib[tst]] = vb.valueHex.toString('hex');
+        } else {
+            agents['data'][idx][mibConfig[agents.service_name].oid2mib[tst]] = vb.value.toString();
+        }
+
+    });
+    parserLogger.debug(agents);
+    //            publishAMQP(appConfig.amqp.queuenamedata, agents);
+}
+
+function processRawData_ifmib(agents, rawSNMPData) {
+    rawSNMPData.forEach(function (vb) {
+        let idx = vb.oid.pop();
+        let tst = vb.oid.toString().replace(/,/g, '.');
+        let o = tst.split('.');
+        let oid = o.join('.');
+        if (typeof (agents['data'][idx]) === 'undefined')
+            agents['data'][idx] = {};
+//        if ((vb.type === 4) && (oid === '1.3.6.1.2.1.2.2.1.6')) {
+        if (oid === '1.3.6.1.2.1.2.2.1.6') {
+            agents['data'][idx][mibConfig[agents.service_name].oid2mib[tst]] = vb.valueHex.toString('hex');
+        } else {
+            agents['data'][idx][mibConfig[agents.service_name].oid2mib[tst]] = vb.value.toString();
+        }
+    });
+    parserLogger.debug(agents);
+    //            publishAMQP(appConfig.amqp.queuenamedata, agents);
+}
+
+function processSNMPWalkData(agents, rawSNMPData) {
+    switch (agents.service_name) {
+        case 'mikrotik_ap_client':
+            processRawData_MAPC(agents, rawSNMPData);
+            break;
+        case 'ifmib':
+            processRawData_ifmib(agents, rawSNMPData);
+            break;
+        default:
+            rawSNMPData.forEach(function (vb) {
+                let idx = vb.oid.pop();
+                let tst = vb.oid.toString().replace(/,/g, '.');
+                let o = tst.split('.');
+                let oid = o.join('.');
+                if (typeof (agents['data'][idx]) === 'undefined')
+                    agents['data'][idx] = {};
+                agents['data'][idx][mibConfig[agents.service_name].oid2mib[tst]] = vb.value.toString();
+            });
+            parserLogger.debug(agents);
+//            publishAMQP(appConfig.amqp.queuenamedata, agents);
+    }
+
+}
+
 
 function getSNMP(targetData) {
     let agents = {
@@ -162,22 +243,12 @@ function getSNMP(targetData) {
         status: 'success',
         data: {}
     };
-//    snmpLogger.warn(targetData.target);
-//    snmpLogger.warn(targetData.port);
-//    snmpLogger.warn(targetData.name);
-    //snmpLogger.warn();
-//    snmpLogger.warn(mibConfig[targetData.service].oid);
-
     let session = new snmp.Session({host: targetData.target, port: targetData.port, community: targetData.name, timeouts: [10000, 10000, 10000, 10000]});
     session.get({oid: mibConfig[targetData.service].oid}, function (error, varbinds) {
         if (error) {
             snmpLogger.error(error);
         } else {
-            //   snmpLogger.warn(varbinds);
-            agents.rawdata = varbinds;
-            //       console.log(agents);
             processSNMPGetData(agents, varbinds);
-//            return agents;
         }
         session.close();
     });
@@ -188,24 +259,19 @@ function walkSNMP(targetData) {
         host: targetData.target,
         rdate: targetData.rdate,
         service_name: targetData.service,
-        status: 'failed',
+        interval: targetData.interval,
+        status: 'success',
         data: {}
     };
-    snmpLogger.info('1');
     let session = new snmp.Session({host: targetData.target, port: targetData.port, community: targetData.name, timeouts: [10000, 10000, 10000, 10000]});
     session.getSubtree({oid: mibConfig[targetData.service].oid}, function (error, varbinds) {
-        snmpLogger.info('2');
         if (error) {
             snmpLogger.error(error);
         } else {
-            agents.status = 'success';
-            snmpLogger.info(varbinds.length);
-            agents.data = varbinds;
+            processSNMPWalkData(agents, varbinds);
         }
         session.close();
     });
-    snmpLogger.info('3');
-    return agents;
 }
 
 
@@ -216,32 +282,18 @@ function getServiceType(serviceName) {
 }
 
 
-function pollTarget(targetData) {
-
-
-//    console.log(targetData.service);
-
-    //  let stype = getServiceType(targetData.service);
-
+function routeSNMPRequest(targetData) {
     switch (getServiceType(targetData.service)) {
         case 'get':
-//            console.log('GET');
             getSNMP(targetData);
             break;
         case 'walk':
-            console.log('WALK');
+            walkSNMP(targetData);
             break;
         default:
             console.log('Unknown type');
     }
-    //  console.log(data);
 
-
-    //  console.log(mibConfig);
-
-
-
-// service: 'testing', 
 
 
 
@@ -325,7 +377,7 @@ open.then(function (conn) {
                 let nowTime = moment().unix();
                 if ((nowTime >= targetHost.stime) && (nowTime <= targetHost.etime)) {
                     amqpLogger.debug('Target: "' + targetHost.target + '" Service: "' + targetHost.service + '" Date: "' + targetHost.rdate + '"');
-                    pollTarget(targetHost);
+                    routeSNMPRequest(targetHost);
                 } else {
                     amqpLogger.warn('Too late to process. Target "' + targetHost.target + '" mib "' + targetHost.service + '" rdate -> "' + targetHost.rdate + '"');
                 }
