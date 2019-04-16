@@ -1,5 +1,5 @@
 {
-    "ifmib": {
+    "ifmib_interfaces": {
         "oid_base": "1.3.6.1.2.1.2.2.1",
         "oid": [1, 3, 6, 1, 2, 1, 2, 2, 1],
         "type": "walk",
@@ -27,6 +27,33 @@
                     "1.3.6.1.2.1.2.2.1.20": "ifouterrors",
                     "1.3.6.1.2.1.2.2.1.21": "ifoutqlen",
                     "1.3.6.1.2.1.2.2.1.22": "ifspecific"
+                }
+    },
+        "ifhcmib_interfaces": {
+        "oid_base": "1.3.6.1.2.1.31.1.1.1",
+        "oid": [1,3,6,1,2,1,31,1,1,1],
+        "type": "walk",
+        "oid2mib":
+                {
+                    "1.3.6.1.2.1.31.1.1.1.1": "ifname",
+                    "1.3.6.1.2.1.31.1.1.1.2": "ifinmulticastpkts",
+                    "1.3.6.1.2.1.31.1.1.1.3": "ifinbroadcastpkts",
+                    "1.3.6.1.2.1.31.1.1.1.4": "ifoutmulticastpkts",
+                    "1.3.6.1.2.1.31.1.1.1.5": "ifoutbroadcastpkts",
+                    "1.3.6.1.2.1.31.1.1.1.6": "ifhcinoctets",
+                    "1.3.6.1.2.1.31.1.1.1.7": "ifhcinucastpkts",
+                    "1.3.6.1.2.1.31.1.1.1.8": "ifhcinmulticastpkts",
+                    "1.3.6.1.2.1.31.1.1.1.9": "ifhcinbroadcastpkts",
+                    "1.3.6.1.2.1.31.1.1.1.10": "ifhcoutoctets",
+                    "1.3.6.1.2.1.31.1.1.1.11": "ifhcoutucastpkts",
+                    "1.3.6.1.2.1.31.1.1.1.12": "ifhcoutmulticastpkts",
+                    "1.3.6.1.2.1.31.1.1.1.13": "ifhcoutbroadcastpkts",
+                    "1.3.6.1.2.1.31.1.1.1.14": "iflinkupdowntrapenable",
+                    "1.3.6.1.2.1.31.1.1.1.15": "ifhighspeed",
+                    "1.3.6.1.2.1.31.1.1.1.16": "ifpromiscuousmode",
+                    "1.3.6.1.2.1.31.1.1.1.17": "ifconnectorpresent",
+                    "1.3.6.1.2.1.31.1.1.1.18": "ifalias",
+                    "1.3.6.1.2.1.31.1.1.1.19": "ifcounterdiscontinuitytime"
                 }
     },
     "mikrotiksystem": {

@@ -1,120 +1,69 @@
 var appConfig = require('./settings.json');
+var appQueue = require('./faQueue.js');
 var mibConfig = require('./mib.json');
 
 var snmp = require('snmp-native'), log4js = require('log4js'), moment = require('moment'), amqp = require('amqplib');
 
-var genLogger = log4js.getLogger('netstatsNodeSNMPPoller');
-var amqpLogger = log4js.getLogger('amqp');
-var snmpLogger = log4js.getLogger('snmp');
-var parserLogger = log4js.getLogger('parser');
+var genLogger = log4js.getLogger('General'), amqpLogger = log4js.getLogger('amqp'), snmpLogger = log4js.getLogger('snmp'), parserLogger = log4js.getLogger('parser');
 
 log4js.configure(appConfig.logger);
+
+let queueSettings = {
+    url: 'amqp://' + appConfig.amqp.user + ':' + appConfig.amqp.password + '@' + appConfig.amqp.server,
+    consumeQueueName: appConfig.amqp.consumeQueueName,
+    isWorkerEnabled: true
+};
+appQueue.init(log4js, queueSettings, snmpHandler);
 
 genLogger.info('Starting...');
 
 
-//process.on('exit', function () {
-//    console.log(agents);
-//});
+function snmpHandler(msg) {
+    let targetHost = JSON.parse(msg);
+    let nowTime = moment().unix();
+//    if ((nowTime >= targetHost.stime) && (nowTime <= targetHost.etime)) {
+    if (nowTime <= targetHost.etime) {
+        genLogger.debug('Target: "' + targetHost.target + '" Service: "' + targetHost.service + '" Date: "' + targetHost.rdate + '"');
+        routeSNMPRequest(targetHost);
+    } else {
+        genLogger.warn('Too late to process. Target "' + targetHost.target + '" mib "' + targetHost.service + '" rdate -> "' + targetHost.rdate + '"');
+    }
+}
 
-//function processSNMPData(res) {
-//    for (var i = 0; i < res.length; i++) {
-//        var o = res[i].oid.split('.');
-//        var idx = o.pop();
-//        var oid = o.join('.');
-//        if (typeof (agents['data'][idx]) === 'undefined')
-//            agents['data'][idx] = {};
-//        if ((res[i].type === 'buffer') && (oid === '1.3.6.1.2.1.2.2.1.6')) {
-//            agents['data'][idx][mibConfig.mikrotikMIB.interfaceMIB.oid2mib[oid]] = res[i].value.toString('hex');
-//        } else {
-//            agents['data'][idx][mibConfig.mikrotikMIB.interfaceMIB.oid2mib[oid]] = res[i].value.toString();
-//        }
-//    }
-//}
 
-//function m(target, oid, mgr) {
-//    mgr.get(target, oid, function (e, r) {
-//        if (e)
-//            return logger.error(e);
-//        for (var k in mibConfig.mikrotikMIB.interfaceMIB.oid2mib) {
-//            mgr.bulkGet(target, k, function (e, r) {
-//                if (e)
-//                    return console.error(e);
-//                processSNMPData(r);
-//            });
-//        }
-//    }, {retries: 3});
-//    console.log(agents);
-//}
+function singlePublish(queuename, payload) {
+    amqpLogger.debug('Sending payload to the queue broker, service: ' + JSON.stringify(payload.service_name) + ' host: ' + JSON.stringify(payload.host) + ' data objects: ' + Object.keys(payload.data).length);
+    appQueue.publishMsg("", queuename, JSON.stringify(payload));
+}
 
-//function snmpMain(target, oid, service_name) {
-//    agents['host'] = target;
-//    agents['service_name'] = service_name;
-//    agents['data'] = {};
-//    logger.info('Running snmp mgr');
-//    mgr = snmp.createManager({community: 'asuran', version: 2, retries: 10});
-//    m(target, oid, mgr);
-//}
+
+function batchPublish(queuename, payloads) {
+    payloads.forEach(function (payload) {
+        amqpLogger.debug('Sending payload to the queue broker, service: ' + JSON.stringify(payload.service_name) + ' host: ' + JSON.stringify(payload.host) + ' data objects: ' + Object.keys(payload.data).length);
+        appQueue.publishMsg("", queuename, JSON.stringify(payload));
+    });
+}
 
 function bail(err) {
     genLogger.error(err);
     process.exit(1);
 }
 
-var open = require('amqplib').connect('amqp://' + appConfig.amqp.user + ':' + appConfig.amqp.password + '@' + appConfig.amqp.server);
-
-
 //function publishAMQP(queuename, msg) {
-//    open.then(function (conn) {
-//        return conn.createChannel();
-//    }).then(function (ch) {
-//        return ch.assertQueue(queuename).then(function (ok) {
-//            return ch.sendToQueue(queuename, new Buffer(JSON.stringify(msg)));
-//            try {
+//    amqp.connect('amqp://' + appConfig.amqp.user + ':' + appConfig.amqp.password + '@' + appConfig.amqp.server).then(function (conn) {
+//        return conn.createChannel().then(function (ch) {
+//            var ok = ch.assertQueue(queuename, {durable: true});
+//            return ok.then(function (_qok) {
+//
+//                ch.sendToQueue(queuename, new Buffer(JSON.stringify(msg)));
+//                amqpLogger.debug("Sent " + JSON.stringify(msg));
 //                return ch.close();
-//            } catch (alreadyClosed) {
-//                logger.error(alreadyClosed.stackAtStateChange);
-//            }
+//            });
+//        }).finally(function () {
+//            conn.close();
 //        });
-////    }).finally(function () {
-////        ch.close();
-//    }).catch(logger.warn);
+//    }).catch(amqpLogger.warn);
 //}
-
-//function publishAMQP(queuename, msg) {
-//    open.then(function (conn) {
-//        return conn.createChannel();
-//    }).then(function (ch) {
-//        return ch.assertQueue(queuename).then(function (ok) {
-//            return ch.sendToQueue(queuename, new Buffer(JSON.stringify(msg)));
-//            try {
-//                return ch.close();
-//            } catch (alreadyClosed) {
-//                logger.error(alreadyClosed.stackAtStateChange);
-//            }
-//        });
-//    }).catch(logger.warn);
-//}
-
-function publishAMQP(queuename, msg) {
-    amqp.connect('amqp://' + appConfig.amqp.user + ':' + appConfig.amqp.password + '@' + appConfig.amqp.server).then(function (conn) {
-        return conn.createChannel().then(function (ch) {
-            var ok = ch.assertQueue(queuename, {durable: true});
-            return ok.then(function (_qok) {
-                // NB: `sentToQueue` and `publish` both return a boolean
-                // indicating whether it's OK to send again straight away, or
-                // (when `false`) that you should wait for the event `'drain'`
-                // to fire before writing again. We're just doing the one write,
-                // so we'll ignore it.
-                ch.sendToQueue(queuename, new Buffer(JSON.stringify(msg)));
-                amqpLogger.debug("Sent " + JSON.stringify(msg));
-                return ch.close();
-            });
-        }).finally(function () {
-            conn.close();
-        });
-    }).catch(amqpLogger.warn);
-}
 
 
 function cleanValue(value, type) {
@@ -186,8 +135,8 @@ function processRawData_MAPC(agents, rawSNMPData) {
         }
 
     });
-    parserLogger.debug(agents);
-    //            publishAMQP(appConfig.amqp.queuenamedata, agents);
+//    parserLogger.debug(agents);
+    singlePublish(appConfig.amqp.publishQueueName, agents);
 }
 
 function processRawData_ifmib(agents, rawSNMPData) {
@@ -200,35 +149,46 @@ function processRawData_ifmib(agents, rawSNMPData) {
             agents['data'][idx] = {};
 //        if ((vb.type === 4) && (oid === '1.3.6.1.2.1.2.2.1.6')) {
         if (oid === '1.3.6.1.2.1.2.2.1.6') {
+            ///        console.log('vb.valueHex.toString(hex) ' + vb.valueHex.toString('hex'));
             agents['data'][idx][mibConfig[agents.service_name].oid2mib[tst]] = vb.valueHex.toString('hex');
         } else {
+
             agents['data'][idx][mibConfig[agents.service_name].oid2mib[tst]] = vb.value.toString();
         }
     });
-    parserLogger.debug(agents);
-    //            publishAMQP(appConfig.amqp.queuenamedata, agents);
+    //   parserLogger.debug(agents);
+    singlePublish(appConfig.amqp.publishQueueName, agents);
 }
 
 function processSNMPWalkData(agents, rawSNMPData) {
+    parserLogger.debug(agents.service_name + ' detected');
     switch (agents.service_name) {
         case 'mikrotik_ap_client':
             processRawData_MAPC(agents, rawSNMPData);
             break;
-        case 'ifmib':
+        case 'ifmib_interfaces':
             processRawData_ifmib(agents, rawSNMPData);
             break;
         default:
+            parserLogger.debug('Using generic parser');
             rawSNMPData.forEach(function (vb) {
                 let idx = vb.oid.pop();
                 let tst = vb.oid.toString().replace(/,/g, '.');
                 let o = tst.split('.');
-                let oid = o.join('.');
+                //   let oid = o.join('.');
+                //   console.log(oid);
                 if (typeof (agents['data'][idx]) === 'undefined')
                     agents['data'][idx] = {};
+//                if (agents.service_name == 'host_resources_processor') {
+//                    console.log(vb)
+//                }
                 agents['data'][idx][mibConfig[agents.service_name].oid2mib[tst]] = vb.value.toString();
             });
-            parserLogger.debug(agents);
-//            publishAMQP(appConfig.amqp.queuenamedata, agents);
+//            if (agents.service_name == 'host_resources_processor') {
+//                console.log(agents);
+//            }
+            //           parserLogger.debug(agents.data);
+            singlePublish(appConfig.amqp.publishQueueName, agents);
     }
 
 }
@@ -291,7 +251,7 @@ function routeSNMPRequest(targetData) {
             walkSNMP(targetData);
             break;
         default:
-            console.log('Unknown type');
+            genLogger.warn('Unknown type');
     }
 
 
@@ -358,31 +318,31 @@ function routeSNMPRequest(targetData) {
 //                    i++;
 //                }
 //            });
-//            //        publishAMQP(appConfig.amqp.queuenamedata, agents);
+//            //        singlePublish(appConfig.amqp.publishQueueName, agents);
 //        }
 //        session.close();
 //    });
 }
 
 // Consumer
-open.then(function (conn) {
-    return conn.createChannel();
-}).then(function (ch) {
-    return ch.assertQueue(appConfig.amqp.queuenamecron).then(function (ok) {
-        ch.prefetch(1);
-        return ch.consume(appConfig.amqp.queuenamecron, function (msg) {
-            if (msg !== null) {
-                let strMsg = msg.content.toString();
-                let targetHost = JSON.parse(strMsg);
-                let nowTime = moment().unix();
-                if ((nowTime >= targetHost.stime) && (nowTime <= targetHost.etime)) {
-                    amqpLogger.debug('Target: "' + targetHost.target + '" Service: "' + targetHost.service + '" Date: "' + targetHost.rdate + '"');
-                    routeSNMPRequest(targetHost);
-                } else {
-                    amqpLogger.warn('Too late to process. Target "' + targetHost.target + '" mib "' + targetHost.service + '" rdate -> "' + targetHost.rdate + '"');
-                }
-                ch.ack(msg);
-            }
-        });
-    });
-}).catch(amqpLogger.warn);
+//open.then(function (conn) {
+//    return conn.createChannel();
+//}).then(function (ch) {
+//    return ch.assertQueue(appConfig.amqp.queuenamecron).then(function (ok) {
+//        ch.prefetch(1);
+//        return ch.consume(appConfig.amqp.queuenamecron, function (msg) {
+//            if (msg !== null) {
+//                let strMsg = msg.content.toString();
+//                let targetHost = JSON.parse(strMsg);
+//                let nowTime = moment().unix();
+//                if ((nowTime >= targetHost.stime) && (nowTime <= targetHost.etime)) {
+//                    amqpLogger.debug('Target: "' + targetHost.target + '" Service: "' + targetHost.service + '" Date: "' + targetHost.rdate + '"');
+//                    routeSNMPRequest(targetHost);
+//                } else {
+//                    amqpLogger.warn('Too late to process. Target "' + targetHost.target + '" mib "' + targetHost.service + '" rdate -> "' + targetHost.rdate + '"');
+//                }
+//                ch.ack(msg);
+//            }
+//        });
+//    });
+//}).catch(amqpLogger.warn);
