@@ -1,0 +1,9 @@
+{".1.3.6.1.2.1.25.2.3":[
+{".1.3.6.1.2.1.25.2.3.1.1": {"type":"ASN_INTEGER", "name":"HRSTORAGEINDEX"}},
+{".1.3.6.1.2.1.25.2.3.1.2": {"type":"ASN_OBJECT_ID", "name":"HRSTORAGETYPE"}},
+{".1.3.6.1.2.1.25.2.3.1.3": {"type":"ASN_OCTET_STR", "name":"HRSTORAGEDESCR"}},
+{".1.3.6.1.2.1.25.2.3.1.4": {"type":"ASN_INTEGER", "name":"HRSTORAGEALLOCATIONUNITS"}},
+{".1.3.6.1.2.1.25.2.3.1.5": {"type":"ASN_INTEGER", "name":"HRSTORAGESIZE"}},
+{".1.3.6.1.2.1.25.2.3.1.6": {"type":"ASN_INTEGER", "name":"HRSTORAGEUSED"}},
+{".1.3.6.1.2.1.25.2.3.1.7": {"type":"ASN_COUNTER", "name":"HRSTORAGEALLOCATIONFAILURES"}},
+]}

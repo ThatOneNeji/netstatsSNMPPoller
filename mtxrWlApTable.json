@@ -1,0 +1,13 @@
+{".1.3.6.1.4.1.14988.1.1.1.3":[
+{".1.3.6.1.4.1.14988.1.1.1.3.1.1": {"type":"ASN_INTEGER", "name":"MTXRWLAPINDEX"}},
+{".1.3.6.1.4.1.14988.1.1.1.3.1.2": {"type":"ASN_GAUGE", "name":"MTXRWLAPTXRATE"}},
+{".1.3.6.1.4.1.14988.1.1.1.3.1.3": {"type":"ASN_GAUGE", "name":"MTXRWLAPRXRATE"}},
+{".1.3.6.1.4.1.14988.1.1.1.3.1.4": {"type":"ASN_OCTET_STR", "name":"MTXRWLAPSSID"}},
+{".1.3.6.1.4.1.14988.1.1.1.3.1.5": {"type":"ASN_OCTET_STR", "name":"MTXRWLAPBSSID"}},
+{".1.3.6.1.4.1.14988.1.1.1.3.1.6": {"type":"ASN_COUNTER", "name":"MTXRWLAPCLIENTCOUNT"}},
+{".1.3.6.1.4.1.14988.1.1.1.3.1.7": {"type":"ASN_INTEGER", "name":"MTXRWLAPFREQ"}},
+{".1.3.6.1.4.1.14988.1.1.1.3.1.8": {"type":"ASN_OCTET_STR", "name":"MTXRWLAPBAND"}},
+{".1.3.6.1.4.1.14988.1.1.1.3.1.9": {"type":"ASN_INTEGER", "name":"MTXRWLAPNOISEFLOOR"}},
+{".1.3.6.1.4.1.14988.1.1.1.3.1.10": {"type":"ASN_COUNTER", "name":"MTXRWLAPOVERALLTXCCQ"}},
+{".1.3.6.1.4.1.14988.1.1.1.3.1.11": {"type":"ASN_COUNTER", "name":"MTXRWLAPAUTHCLIENTCOUNT"}},
+]}
