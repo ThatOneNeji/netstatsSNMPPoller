@@ -17,9 +17,9 @@
     "author": "ThatOneNeji",
     "contributors": [],
     "dependencies": {
-        "amqplib": "^0.5.5",
-        "log4js": "^6.1.0",
-        "moment": "^2.24.0",
+        "amqplib": "^0.8.0",
+        "log4js": "^6.3.0",
+        "moment": "^2.29.1",
         "snmp-native": "^1.2.0"
     }
 }
